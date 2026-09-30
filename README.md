@@ -1,6 +1,7 @@
 ## étape 1 : Comm + Test ##
 
 echo "export ROS_DOMAIN_ID=42" >> ~/.bashrc (PI + PC)
+
 echo "source /opt/ros/jazzy/setup.bash" >> ~/.bashrc (PI + PC)
 
 source ~/.bashrc -> actualiser PI + PC
