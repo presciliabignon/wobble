@@ -9,7 +9,25 @@ source ~/.bashrc -> actualiser PI + PC
 ros2 multicast receive -> PC
 ros2 multicast send -> PI
 
+-----------------------------------------------------
+
 sudo apt install ros-jazzy-cv-bridge python3-opencv -y
+
+----------------------------------------------------
+
+sudo usermod -aG video <username>
+
+newgrp video 
+
+sudo reboot
+
+source install/setup.bash
+
+source ~/wobble/install/setup.bash (dans fichier bashrc)
+
+colcon build --packages-select camera_pkg --symlink-install
+
+-----------------------------------------------------
 
 ## étape 2 : package caméra ##
 
