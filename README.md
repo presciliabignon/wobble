@@ -9,6 +9,8 @@ source ~/.bashrc -> actualiser PI + PC
 ros2 multicast receive -> PC
 ros2 multicast send -> PI
 
+sudo apt install ros-jazzy-cv-bridge python3-opencv -y
+
 ## étape 2 : package caméra ##
 
 ros2 pkg create --build-type ament_python camera_pkg --dependencies rclpy sensor_msgs cv_bridge
