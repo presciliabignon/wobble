@@ -29,6 +29,9 @@ colcon build --packages-select camera_pkg --symlink-install
 
 -----------------------------------------------------
 
-## étape 2 : package caméra ##
+## étape 2 : caméra ##
 
-ros2 pkg create --build-type ament_python camera_pkg --dependencies rclpy sensor_msgs cv_bridge
+ros2 pkg create --build-type ament_python camera_pkg --dependencies rclpy sensor_msgs cv_bridge --création package
+
+
+ros2 run rqt_image_view rqt_image_view -- visualiseur sur PC
