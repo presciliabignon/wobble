@@ -35,3 +35,13 @@ ros2 pkg create --build-type ament_python camera_pkg --dependencies rclpy sensor
 
 
 ros2 run rqt_image_view rqt_image_view -- visualiseur sur PC
+
+## étape PC ##
+
+ros2 pkg create --build-type ament_python vision_pkg --dependencies rclpy sensor_msgs cv_bridge
+
+echo "source ~/Documents/Project/wobble_pc/install/setup.bash" >> ~/.bashrc
+
+colcon build --packages-select vision_pkg --symlink-install
+
+ros2 run vision_pkg processor
