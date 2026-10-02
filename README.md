@@ -42,6 +42,6 @@ ros2 pkg create --build-type ament_python vision_pkg --dependencies rclpy sensor
 
 echo "source ~/Documents/Project/wobble_pc/install/setup.bash" >> ~/.bashrc
 
-colcon build --packages-select vision_pkg --symlink-install
+colcon build --packages-up-to vision_pkg --symlink-install
 
 ros2 run vision_pkg processor
