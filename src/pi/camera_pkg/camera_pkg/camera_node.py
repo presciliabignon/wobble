@@ -7,12 +7,8 @@ import cv2
 class CameraNode(Node):
     def __init__(self):
         super().__init__('camera_node')
-        
         self.publisher_ = self.create_publisher(Image, 'camera/image_raw', 10)
-        
-        # Initialisation du pont de traduction OpenCV <-> ROS
         self.br = CvBridge()
-        
         self.cap = cv2.VideoCapture(0)
         
         if not self.cap.isOpened():
@@ -21,15 +17,13 @@ class CameraNode(Node):
         self.timer = self.create_timer(0.1, self.timer_callback)
 
     def timer_callback(self):
-        # Capture de la trame vidéo
         ret, frame = self.cap.read()
-        
         if ret:
             msg = self.br.cv2_to_imgmsg(frame, encoding="bgr8")
             self.publisher_.publish(msg)
-            self.get_logger().info('Image publiée sur le réseau DDS')
+            self.get_logger().info('Image publiée sur le réseau')
         else:
-            self.get_logger().warning('Échec de lecture matérielle')
+            self.get_logger().warning('Échec de lecture')
 
 def main(args=None):
     rclpy.init(args=args)
