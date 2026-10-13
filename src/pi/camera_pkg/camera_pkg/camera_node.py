@@ -4,31 +4,31 @@ from sensor_msgs.msg import Image
 from cv_bridge import CvBridge
 import cv2
 
+
 class CameraNode(Node):
     def __init__(self):
         super().__init__('camera_node')
         self.publisher_ = self.create_publisher(Image, 'camera/image_raw', 10)
         self.br = CvBridge()
         self.cap = cv2.VideoCapture(0)
-        
         if not self.cap.isOpened():
-            self.get_logger().error("Impossible de communiquer avec la webcam.")
-            
+            self.get_logger().error("Impossible d'ouvrir la webcam")
+        # 10 images par seconde
         self.timer = self.create_timer(0.1, self.timer_callback)
 
     def timer_callback(self):
-        ret, frame = self.cap.read()
-        if ret:
-            msg = self.br.cv2_to_imgmsg(frame, encoding="bgr8")
+        ok, frame = self.cap.read()
+        if ok:
+            msg = self.br.cv2_to_imgmsg(frame, encoding='bgr8')
+            msg.header.stamp = self.get_clock().now().to_msg()
             self.publisher_.publish(msg)
-            self.get_logger().info('Image publiée sur le réseau')
         else:
-            self.get_logger().warning('Échec de lecture')
+            self.get_logger().warning('Échec de lecture de la webcam')
+
 
 def main(args=None):
     rclpy.init(args=args)
     node = CameraNode()
-    
     try:
         rclpy.spin(node)
     except KeyboardInterrupt:
@@ -38,6 +38,7 @@ def main(args=None):
         node.destroy_node()
         if rclpy.ok():
             rclpy.shutdown()
+
 
 if __name__ == '__main__':
     main()
