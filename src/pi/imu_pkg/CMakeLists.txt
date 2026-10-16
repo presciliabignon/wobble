@@ -22,4 +22,8 @@ if(BUILD_TESTING)
   ament_lint_auto_find_test_dependencies()
 endif()
 
+add_executable(imu_node src/imu_node.cpp)
+ament_target_dependencies(imu_node rclcpp sensor_msgs)
+install(TARGETS imu_node DESTINATION lib/${PROJECT_NAME})
+
 ament_package()
