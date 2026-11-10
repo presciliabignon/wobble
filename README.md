@@ -4,7 +4,7 @@ Wobble is a quadruped robot built with ROS 2, a Raspberry Pi 4, a few sensors an
 
 > **Status: building...** The core software already works. The mechanical parts are based on the [SpotMicro](https://www.thingiverse.com/thing:3445283) design: some are currently being printed, the others need a few modifications to fit my hardware.
 
-<!-- Picture of the current stage (coming very soon) -->
+*Picture of the current stage: coming very soon.*
 
 ## Project status
 
@@ -85,4 +85,4 @@ The mechanical design is based on [SpotMicro](https://www.thingiverse.com/thing:
 
 ## License
 
-<!-- Apache-2.0 -->
+The code is released under the Apache License 2.0 (see [`LICENSE`](LICENSE)). The mechanical parts derived from SpotMicro follow the terms of the original design.
