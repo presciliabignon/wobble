@@ -39,7 +39,7 @@ Everything that has to react quickly (sensors, servos) runs on the Pi, to avoid 
 - 1× HC-SR04 ultrasonic sensor (coming soon)
 - Power: 2S 5200 mAh LiPo battery, charge/discharge module, 5 V 4 A buck converter (for the Pi), D4184 MOSFET module and 6 V 10 A UBEC (for the servos)
 
-The power wiring diagram is in [`docs/schematics/`](docs/schematics/ but need small modifications).
+The power wiring diagram is in [`docs/schematics/`](docs/schematics/) (but needs small modifications).
 
 ## Repository structure
 
