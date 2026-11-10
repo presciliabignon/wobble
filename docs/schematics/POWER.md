@@ -1,1 +1,1 @@
-![Power Schematic](../img/power_diagram.png)
+![Power Schematic](../img/power_diagram.jpg)
