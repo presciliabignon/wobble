@@ -13,13 +13,12 @@ class VisionNode(Node):
         self.publisher_ = self.create_publisher(Image, 'vision/aruco_tracker', 10)
         self.br = CvBridge()
 
-        # Dictionnaire des marqueurs ArUco (grille 4x4, 50 marqueurs)
+        # Dictionnaire des marqueurs
         self.dictionary = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_50)
 
         self.get_logger().info('Nœud ArUco prêt')
 
     def image_callback(self, msg):
-        # Message ROS -> image OpenCV (.copy() pour pouvoir dessiner dessus)
         frame = self.br.imgmsg_to_cv2(msg, 'bgr8').copy()
 
         # La détection se fait en niveaux de gris
