@@ -39,7 +39,7 @@ Everything that has to react quickly (sensors, servos) runs on the Pi, to avoid 
 - 1× HC-SR04 ultrasonic sensor (coming soon)
 - Power: 2S 5200 mAh LiPo battery, charge/discharge module, 5 V 4 A buck converter (for the Pi), D4184 MOSFET module and 6 V 10 A UBEC (for the servos)
 
-The power wiring diagram is in [`schematics/`](schematics/).
+The power wiring diagram is in [`docs/schematics/`](docs/schematics/).
 
 ## Repository structure
 
@@ -70,7 +70,7 @@ ros2 run vision_pkg processor     # PC: detects the ArUco markers
 ros2 run imu_pkg imu_node         # Pi: prints the IMU measurements
 ```
 
-The Pi and the PC must be on the same network. More commands will be listed in [`docs/commands.md`](docs/commands.md) (work in progress).
+The Pi and the PC must be on the same network. More commands will be listed in [`docs/commands.md`](docs/COMMANDS.md) (work in progress).
 
 ## Next steps
 
