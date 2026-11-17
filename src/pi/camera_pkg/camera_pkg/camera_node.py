@@ -13,7 +13,7 @@ class CameraNode(Node):
         self.cap = cv2.VideoCapture(0)
         if not self.cap.isOpened():
             self.get_logger().error("Impossible d'ouvrir la webcam")
-        # 10 images par seconde
+        # 10 frames per second
         self.timer = self.create_timer(0.1, self.timer_callback)
 
     def timer_callback(self):
