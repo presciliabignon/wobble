@@ -13,7 +13,7 @@ class VisionNode(Node):
         self.publisher_ = self.create_publisher(Image, 'vision/aruco_tracker', 10)
         self.br = CvBridge()
 
-        # Dictionnaire des marqueurs
+        # Marker dictionary
         self.dictionary = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_50)
 
         self.get_logger().info('Nœud ArUco prêt')
@@ -21,19 +21,19 @@ class VisionNode(Node):
     def image_callback(self, msg):
         frame = self.br.imgmsg_to_cv2(msg, 'bgr8').copy()
 
-        # La détection se fait en niveaux de gris
+        # Detection is performed in grayscale
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         corners, ids, rejected = cv2.aruco.detectMarkers(gray, self.dictionary)
 
         if ids is not None:
             cv2.aruco.drawDetectedMarkers(frame, corners, ids)
             for i in range(len(ids)):
-                # Centre du marqueur = moyenne des 4 coins
+                # Marker center = average of the 4 corners
                 center = corners[i][0].mean(axis=0)
                 self.get_logger().info(
                     f'Marqueur {ids[i][0]} : x={center[0]:.0f}, y={center[1]:.0f}')
 
-        # On republie l'image (avec les cadres dessinés s'il y a des marqueurs)
+        # The image is republished (with drawn frames if markers are detected)
         out = self.br.cv2_to_imgmsg(frame, encoding='bgr8')
         out.header = msg.header
         self.publisher_.publish(out)
