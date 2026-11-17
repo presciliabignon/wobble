@@ -15,7 +15,7 @@ public:
   ImuNode()
   : Node("imu_node")
   {
-    // Ouvre le bus I2C et choisit le capteur (adresse 0x68)
+    // Open the I2C bus and select the captor (adress 0x68)
     fd_ = open("/dev/i2c-1", O_RDWR);
     if (fd_ < 0) {
       RCLCPP_ERROR(this->get_logger(), "Impossible d'ouvrir /dev/i2c-1");
@@ -23,13 +23,13 @@ public:
     }
     ioctl(fd_, I2C_SLAVE, 0x68);
 
-    // Réveille le capteur : on écrit 0 dans le registre 0x6B
+    // Wake up the sensor (wrrite 0 to register 0x6B)
     uint8_t wake[2] = {0x6B, 0x00};
     if (write(fd_, wake, 2) != 2) {
       RCLCPP_ERROR(this->get_logger(), "Impossible de réveiller le capteur");
     }
 
-    // Filtre passe-bas du capteur pour limiter le bruit
+    // Enable the sensor's low-pass filter to limit noise
     uint8_t config[2] = {0x1A, 0x03};
     if (write(fd_, config, 2) != 2) {
       RCLCPP_ERROR(this->get_logger(), "Impossible de régler le filtre");
@@ -43,7 +43,7 @@ public:
   }
 
 private:
-  // Lit une mesure de 16 bits à partir du registre "reg"
+  // Read a 16-bit measurement from the 'reg' register
   int16_t read_word(uint8_t reg)
   {
     uint8_t bytes[2] = {0, 0};
@@ -56,7 +56,7 @@ private:
   void calibrate()
   {
     RCLCPP_INFO(this->get_logger(), "Calibration : ne pas bouger le capteur...");
-    usleep(100000);  // on laisse le capteur se stabiliser après le réveil
+    usleep(100000);  // Let the sensor stabilize after waking up
 
     double sum_ax = 0, sum_ay = 0, sum_az = 0;
     double sum_gx = 0, sum_gy = 0, sum_gz = 0;
@@ -67,7 +67,7 @@ private:
       sum_gx += read_word(0x43);
       sum_gy += read_word(0x45);
       sum_gz += read_word(0x47);
-      usleep(5000);  // 5 ms entre deux mesures
+      usleep(5000);  // Wait 5 ms between two measurements
     }
 
     ax_off_ = sum_ax / 200;
@@ -82,10 +82,10 @@ private:
 
   void timer_callback()
   {
-    double ax = (read_word(0x3B) - ax_off_) / 16384.0;  // en g
+    double ax = (read_word(0x3B) - ax_off_) / 16384.0;  // In g
     double ay = (read_word(0x3D) - ay_off_) / 16384.0;
     double az = (read_word(0x3F) - az_off_) / 16384.0;
-    double gx = (read_word(0x43) - gx_off_) / 131.0;    // en degrés par seconde
+    double gx = (read_word(0x43) - gx_off_) / 131.0;    // In degrees per second
     double gy = (read_word(0x45) - gy_off_) / 131.0;
     double gz = (read_word(0x47) - gz_off_) / 131.0;
 
@@ -97,7 +97,7 @@ private:
   int fd_ = -1;
   rclcpp::TimerBase::SharedPtr timer_;
 
-  // Décalages mesurés à l'arrêt, dans l'unité brute du capteur
+  // Offsets measured while stationary, in the sensor's raw unit
   double ax_off_ = 0.0;
   double ay_off_ = 0.0;
   double az_off_ = 0.0;
